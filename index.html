@@ -150,6 +150,7 @@
              "Content-Type": "application/json"
            },
           body: JSON.stringify(data)
+          console.log("Data der sendes:", data);
         });
         const result = await response.json();
         statusText.textContent = "Tak for din tilmelding!";
