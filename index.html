@@ -146,6 +146,9 @@
       try {
         const response = await fetch("https://script.google.com/macros/s/AKfycbyjoXsGahNQ7PCH7a_0Y8RNkvGVZPcrUSLIIVYumBqIebUg2dgxRNiExjQPT_u8JwxVuA/exec", {
           method: "POST",
+           headers: {
+             "Content-Type": "application/json"
+           },
           body: JSON.stringify(data)
         });
         const result = await response.json();
