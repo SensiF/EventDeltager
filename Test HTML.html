@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Formular</title>
+</head>
+<body>
+  <h2>Kontaktformular</h2>
+  <form id="kontaktForm">
+    <label>Navn:</label><br>
+    <input type="text" name="navn" required><br>
+    <label>Email:</label><br>
+    <input type="email" name="email" required><br>
+    <label>Besked:</label><br>
+    <textarea name="besked" required></textarea><br><br>
+    <button type="submit">Send</button>
+  </form>
+
+  <p id="status"></p>
+
+  <script>
+    const form = document.getElementById('kontaktForm');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const data = {
+        navn: form.navn.value,
+        email: form.email.value,
+        besked: form.besked.value
+      };
+
+      fetch('https://script.google.com/macros/s/AKfycbyaCtUQtnGBZKF3RwCvuk7MMkgwq_HH6Duv4rDl9JYU3y7Ybh0v3G5KtJnjYL9IOolsKw/exec', {
+        method: 'POST',
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(response => {
+        document.getElementById('status').innerText = 'Tak! Din besked er sendt.';
+        form.reset();
+      })
+      .catch(err => {
+        document.getElementById('status').innerText = 'Fejl! Prøv igen senere.';
+        console.error(err);
+      });
+    });
+  </script>
+</body>
+</html>
