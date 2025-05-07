@@ -137,6 +137,8 @@
         betalt: document.getElementById('betalt').checked
       };
 
+      console.log("Data der sendes:", data);
+
       if (!data.betalt) {
         statusText.textContent = "Du skal bekræfte betaling for at sende.";
         statusText.style.color = "red";
@@ -145,7 +147,6 @@
 
       try {
         const response = await fetch("https://script.google.com/macros/s/AKfycbzgBQzVu8J1_RtcLe8hXdkPhck0eRSdkSKiMYBhXS5wKRYMymRojeVyss72XZi5-bVAvQ/exec", {
-          console.log("Data der sendes:", data);
           method: "POST",
           headers: {
             "Content-Type": "application/json"
