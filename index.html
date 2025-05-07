@@ -73,7 +73,7 @@
     <!-- Eventnavn som konstant -->
     <div class="form-group">
       <label>Event:</label>
-      <input type="text" name="event" value="Fårup sommerland 2025" readonly>
+      <input type="text" name="event" value="Firma Sommerfest 2025" readonly>
     </div>
 
     <!-- Navn -->
@@ -102,7 +102,7 @@
     </div>
 
     <!-- Billede flyttet her -->
-    <img src="Betaling.jpg" alt="Betaling">
+    <img src="https://via.placeholder.com/600x200?text=Velkommen+til+Eventet" alt="Event Banner">
 
     <!-- Har betalt -->
     <div class="checkbox-group">
@@ -145,12 +145,9 @@
 
       try {
         const response = await fetch("https://script.google.com/macros/s/AKfycbzgBQzVu8J1_RtcLe8hXdkPhck0eRSdkSKiMYBhXS5wKRYMymRojeVyss72XZi5-bVAvQ/exec", {
-          method: "POST",
-           headers: {
-             "Content-Type": "application/json"
-           },
-          body: JSON.stringify(data)
           console.log("Data der sendes:", data);
+          method: "POST",
+          body: JSON.stringify(data)
         });
         const result = await response.json();
         statusText.textContent = "Tak for din tilmelding!";
