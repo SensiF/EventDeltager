@@ -1,165 +1,111 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tilmelding til Event</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
-      padding: 30px;
+      background: #f2f2f2;
+      padding: 2rem;
+    }
+    .container {
       max-width: 600px;
       margin: auto;
-      color: #333;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    h2 {
+    h1 {
       text-align: center;
-      color: #2c3e50;
-    }
-    .form-group {
-      margin-bottom: 15px;
     }
     label {
       display: block;
+      margin-top: 1rem;
       font-weight: bold;
-      margin-bottom: 5px;
     }
-    input[type="text"],
-    input[type="email"],
-    select,
-    textarea {
+    input, select, textarea {
       width: 100%;
-      padding: 10px;
+      padding: 0.6rem;
+      margin-top: 0.3rem;
       border: 1px solid #ccc;
       border-radius: 6px;
-      box-sizing: border-box;
     }
-    textarea {
-      resize: vertical;
-    }
-    .checkbox-group {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 15px;
+    input[type="checkbox"] {
+      width: auto;
     }
     button {
-      background-color: #3498db;
-      color: white;
-      padding: 12px 20px;
+      margin-top: 1.5rem;
+      background: #007BFF;
+      color: #fff;
+      padding: 0.8rem 1.2rem;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      font-size: 16px;
+      width: 100%;
+      font-size: 1rem;
     }
-    button:disabled {
-      background-color: #aaa;
+    button:hover {
+      background: #0056b3;
+    }
+    .checkbox-wrapper {
+      margin-top: 1rem;
     }
     img {
       display: block;
+      margin: 1.5rem auto;
       max-width: 100%;
-      margin: 20px auto;
       border-radius: 8px;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h1>Tilmelding til Event</h1>
 
-  <h2>Tilmeld dig eventet</h2>
+    <form id="tilmeldForm" method="POST" action="https://script.google.com/macros/s/AKfycbzgBQzVu8J1_RtcLe8hXdkPhck0eRSdkSKiMYBhXS5wKRYMymRojeVyss72XZi5-bVAvQ/exec">
+      <!-- Fast event-navn -->
+      <input type="hidden" name="event" value="Sommerfest 2025" />
+      <p><strong>Event:</strong> Sommerfest 2025</p>
 
-  <!-- Formular -->
-  <form id="tilmeldForm">
-    
-    <!-- Eventnavn som konstant -->
-    <div class="form-group">
-      <label>Event:</label>
-      <input type="text" name="event" value="Firma Sommerfest 2025" readonly>
-    </div>
+      <!-- Navn -->
+      <label for="navn">Navn</label>
+      <input type="text" id="navn" name="navn" required />
 
-    <!-- Navn -->
-    <div class="form-group">
-      <label for="navn">Navn:</label>
-      <input type="text" id="navn" name="navn" required>
-    </div>
+      <!-- Email -->
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required />
 
-    <!-- Email -->
-    <div class="form-group">
-      <label for="email">E-mail:</label>
-      <input type="email" id="email" name="email" required>
-    </div>
-
-    <!-- Antal deltagere (dropdown) -->
-    <div class="form-group">
-      <label for="antal">Antal deltagere:</label>
+      <!-- Antal deltagere -->
+      <label for="antal">Antal deltagere</label>
       <select id="antal" name="antal" required>
-        <option value="">Vælg antal</option>
-        <option value="1">1 deltager</option>
-        <option value="2">2 deltagere</option>
-        <option value="3">3 deltagere</option>
-        <option value="4">4 deltagere</option>
-        <option value="5">5 deltagere</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
       </select>
-    </div>
 
-    <!-- Billede flyttet her -->
-    <img src="Betaling.jpg" alt="Betaling">
+      <!-- Billede -->
+      <img src="Betaling.jpg" alt="Billede" />
 
-    <!-- Har betalt -->
-    <div class="checkbox-group">
-      <input type="checkbox" id="betalt" required>
-      <label for="betalt">Jeg bekræfter, at jeg har betalt</label>
-    </div>
+      <!-- Betaling -->
+      <div class="checkbox-wrapper">
+        <label>
+          <input type="checkbox" name="betalt" required />
+          Jeg bekræfter, at jeg har betalt
+        </label>
+      </div>
 
-    <!-- Kommentar -->
-    <div class="form-group">
-      <label for="kommentar">Kommentar (valgfri):</label>
-      <textarea id="kommentar" name="kommentar" rows="3"></textarea>
-    </div>
+      <!-- Kommentar -->
+      <label for="kommentar">Kommentar (valgfrit)</label>
+      <textarea id="kommentar" name="kommentar" rows="4"></textarea>
 
-    <!-- Indsend -->
-    <button type="submit" id="submitBtn">Indsend</button>
-    <p id="status"></p>
-  </form>
-
-  <script>
-    const form = document.getElementById('tilmeldForm');
-    const statusText = document.getElementById('status');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const data = {
-        event: form.event.value,
-        navn: form.navn.value,
-        email: form.email.value,
-        antal: form.antal.value,
-        kommentar: form.kommentar.value,
-        betalt: document.getElementById('betalt').checked
-      };
-
-      console.log("Data der sendes:", data);
-
-      if (!data.betalt) {
-        statusText.textContent = "Du skal bekræfte betaling for at sende.";
-        statusText.style.color = "red";
-        return;
-      }
-
-      try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbzgBQzVu8J1_RtcLe8hXdkPhck0eRSdkSKiMYBhXS5wKRYMymRojeVyss72XZi5-bVAvQ/exec", {
-          method: "POST",
-          body: JSON.stringify(data)
-        });
-        const result = await response.json();
-        statusText.textContent = "Tak for din tilmelding!";
-        statusText.style.color = "green";
-        form.reset();
-      } catch (error) {
-        statusText.textContent = "Noget gik galt. Prøv igen senere.";
-        statusText.style.color = "red";
-      }
-    });
-  </script>
-
+      <!-- Submit -->
+      <button type="submit">Indsend</button>
+    </form>
+  </div>
 </body>
 </html>
